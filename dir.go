@@ -1,6 +1,11 @@
 package fs
 
-import "os"
+import (
+	iofs "io/fs"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+)
 
 func CreateDir(path string) error {
 	return os.MkdirAll(path, 0755)
@@ -24,4 +29,17 @@ func Mkdir(path string) error {
 
 func Mkdirp(path string) error {
 	return CreateDir(path)
+}
+
+func ListDir(path string) ([]iofs.FileInfo, error) {
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return files, nil
+}
+
+func WalkDir(path string, fn iofs.WalkDirFunc) error {
+	return filepath.WalkDir(path, fn)
 }
