@@ -3,36 +3,35 @@ package ini
 import (
 	"fmt"
 
-	goini "github.com/go-ini/ini"
 	"github.com/go-zoox/fs"
+	goini "github.com/subpop/go-ini"
 )
 
-func Read(path string) (*goini.File, error) {
+func Read(path string, data interface{}) error {
 	if path == "" {
-		return nil, fmt.Errorf("path is empty")
+		return fmt.Errorf("path is empty")
 	}
 	if !fs.IsExist(path) {
-		return nil, fmt.Errorf("path is not exist")
+		return fmt.Errorf("path is not exist")
 	}
 
-	// str, err := fs.ReadFileAsString(path)
-	// if err != nil {
-	// 	return err
-	// }
+	bytes, err := fs.ReadFile(path)
+	if err != nil {
+		return err
+	}
 
-	return goini.Load(path)
+	return goini.Unmarshal(bytes, data)
 }
 
 func Write(path string, data interface{}) error {
-	panic("@TO_IMPLEMENT")
-	// if path == "" {
-	// 	return fmt.Errorf("path is empty")
-	// }
+	if path == "" {
+		return fmt.Errorf("path is empty")
+	}
 
-	// str, err := goini.Marshal(data)
-	// if err != nil {
-	// 	return err
-	// }
+	str, err := goini.Marshal(data)
+	if err != nil {
+		return err
+	}
 
-	// return fs.WriteFile(path, str)
+	return fs.WriteFile(path, str)
 }

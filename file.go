@@ -65,8 +65,12 @@ func WriteFile(path string, data []byte) error {
 	return nil
 }
 
+func ReadFile(srcPath string) ([]byte, error) {
+	return ioutil.ReadFile(srcPath)
+}
+
 func ReadFileAsString(srcPath string) (string, error) {
-	bytes, err := ioutil.ReadFile(srcPath)
+	bytes, err := ReadFile(srcPath)
 	if err != nil {
 		return "", err
 	}
