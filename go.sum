@@ -12,6 +12,8 @@ github.com/go-playground/validator/v10 v10.4.1 h1:pH2c5ADXtd66mxoE0Zm9SUhxE20r7a
 github.com/go-playground/validator/v10 v10.4.1/go.mod h1:nlOn6nFhuKACm19sB/8EGNn9GlaMV7XkbRSipzJ0Ii4=
 github.com/go-zoox/encoding v1.0.0 h1:3T9GiLP7OV8MGtYGC54GHlgNCzBkYPSW1IKU5xYtBKE=
 github.com/go-zoox/encoding v1.0.0/go.mod h1:btbQ8YnhKEgP/4AgP5JsV0eYWoPqzFttmCox1QMiq4w=
+github.com/go-zoox/encoding v1.0.1 h1:WdSdlzePvVHdjR93cpX0cFAm4cXBIfHMWPERQZOOmec=
+github.com/go-zoox/encoding v1.0.1/go.mod h1:btbQ8YnhKEgP/4AgP5JsV0eYWoPqzFttmCox1QMiq4w=
 github.com/go-zoox/uuid v0.0.1 h1:txqmDavRTq68gzzqWfJQLorFyUp9a7M2lmq2KcwPGPA=
 github.com/go-zoox/uuid v0.0.1/go.mod h1:0/F4LdfLqFdyqOf7aXoiYXRkXHU324JQ5DZEytXYBPM=
 github.com/goccy/go-yaml v1.9.5 h1:Eh/+3uk9kLxG4koCX6lRMAPS1OaMSAi+FJcya0INdB0=
