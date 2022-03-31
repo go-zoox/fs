@@ -3,8 +3,8 @@ package yaml
 import (
 	"fmt"
 
+	goyaml "github.com/go-zoox/encoding/yaml"
 	"github.com/go-zoox/fs"
-	goyaml "github.com/goccy/go-yaml"
 )
 
 func Read(path string, data interface{}) error {
@@ -20,7 +20,7 @@ func Read(path string, data interface{}) error {
 		return err
 	}
 
-	return goyaml.Unmarshal([]byte(str), data)
+	return goyaml.Decode([]byte(str), data)
 }
 
 func Write(path string, data interface{}) error {
@@ -28,7 +28,7 @@ func Write(path string, data interface{}) error {
 		return fmt.Errorf("path is empty")
 	}
 
-	str, err := goyaml.Marshal(data)
+	str, err := goyaml.Encode(data)
 	if err != nil {
 		return err
 	}

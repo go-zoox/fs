@@ -3,8 +3,8 @@ package toml
 import (
 	"fmt"
 
+	gotoml "github.com/go-zoox/encoding/toml"
 	"github.com/go-zoox/fs"
-	gotoml "github.com/pelletier/go-toml"
 )
 
 func Read(path string, data interface{}) error {
@@ -20,7 +20,7 @@ func Read(path string, data interface{}) error {
 		return err
 	}
 
-	return gotoml.Unmarshal([]byte(str), data)
+	return gotoml.Decode([]byte(str), data)
 }
 
 func Write(path string, data interface{}) error {
@@ -28,7 +28,7 @@ func Write(path string, data interface{}) error {
 		return fmt.Errorf("path is empty")
 	}
 
-	str, err := gotoml.Marshal(data)
+	str, err := gotoml.Encode(data)
 	if err != nil {
 		return err
 	}
