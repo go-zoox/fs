@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"sort"
 )
 
 func CreateFile(path string) error {
@@ -110,4 +111,34 @@ func ReadFileByLine(srcPath string) ([]string, error) {
 	}
 
 	return res, nil
+}
+
+type FilePart struct {
+	Path string
+	//
+	Index int
+}
+
+func Merge(filePath string, parts []*FilePart) error {
+	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+
+	sort.Slice(parts, func(i, j int) bool {
+		return parts[i].Index < parts[j].Index
+	})
+
+	for _, part := range parts {
+		fp, err := os.Open(part.Path)
+		if err != nil {
+			return err
+		}
+
+		if _, err := io.Copy(f, fp); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
