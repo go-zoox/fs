@@ -55,6 +55,12 @@ func OpenFile(path string) (*os.File, error) {
 }
 
 func WriteFile(path string, data []byte) error {
+	if !IsExist(path) {
+		if err := CreateFile(path); err != nil {
+			return err
+		}
+	}
+
 	f, err := os.Open(path)
 	if err != nil {
 		return err
