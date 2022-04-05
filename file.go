@@ -61,13 +61,16 @@ func WriteFile(path string, data []byte) error {
 		}
 	}
 
-	f, err := os.Open(path)
+	f, err := os.OpenFile(path, os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	f.Write(data)
+	if _, err := f.Write(data); err != nil {
+		return err
+	}
+
 	return nil
 }
 
