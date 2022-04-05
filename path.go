@@ -8,6 +8,14 @@ import (
 	"github.com/go-zoox/uuid"
 )
 
+func CurrentDir() string {
+	if dir, err := os.Getwd(); err == nil {
+		return dir
+	}
+
+	return ""
+}
+
 func JoinPath(paths ...string) string {
 	return path.Join(paths...)
 }
