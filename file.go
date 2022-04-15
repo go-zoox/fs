@@ -133,12 +133,14 @@ func Stat(path string) (os.FileInfo, error) {
 	return os.Stat(path)
 }
 
+// FilePart represents a part of a file.
 type FilePart struct {
 	Path string
 	//
 	Index int
 }
 
+// Merge merges files into one file.
 func Merge(filePath string, parts []*FilePart) error {
 	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -163,6 +165,7 @@ func Merge(filePath string, parts []*FilePart) error {
 	return nil
 }
 
+// Size returns the size of the file.
 func Size(path string) int64 {
 	info, err := os.Stat(path)
 	if err != nil {

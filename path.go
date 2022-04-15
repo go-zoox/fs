@@ -8,6 +8,7 @@ import (
 	"github.com/go-zoox/uuid"
 )
 
+// CurrentDir returns the path of the current directory.
 func CurrentDir() string {
 	if dir, err := os.Getwd(); err == nil {
 		return dir
@@ -16,6 +17,7 @@ func CurrentDir() string {
 	return ""
 }
 
+// JoinPath joins any number of path elements into a single path, adding a
 func JoinPath(paths ...string) string {
 	return ospath.Join(paths...)
 }
