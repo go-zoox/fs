@@ -8,7 +8,14 @@ import (
 	"github.com/go-zoox/uuid"
 )
 
-// JoinPath joins paths into a path.
+func CurrentDir() string {
+	if dir, err := os.Getwd(); err == nil {
+		return dir
+	}
+
+	return ""
+}
+
 func JoinPath(paths ...string) string {
 	return ospath.Join(paths...)
 }

@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"sort"
 )
 
 // CreateFile creates a file.
@@ -67,13 +68,22 @@ func OpenFile(path string) (*os.File, error) {
 
 // WriteFile writes a file.
 func WriteFile(path string, data []byte) error {
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0644)
+	if !IsExist(path) {
+		if err := CreateFile(path); err != nil {
+			return err
+		}
+	}
+
+	f, err := os.OpenFile(path, os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	f.Write(data)
+	if _, err := f.Write(data); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -121,4 +131,43 @@ func ReadFileLines(srcPath string) ([]string, error) {
 // Stat returns the FileInfo structure describing file.
 func Stat(path string) (os.FileInfo, error) {
 	return os.Stat(path)
+}
+
+type FilePart struct {
+	Path string
+	//
+	Index int
+}
+
+func Merge(filePath string, parts []*FilePart) error {
+	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+
+	sort.Slice(parts, func(i, j int) bool {
+		return parts[i].Index < parts[j].Index
+	})
+
+	for _, part := range parts {
+		fp, err := os.Open(part.Path)
+		if err != nil {
+			return err
+		}
+
+		if _, err := io.Copy(f, fp); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func Size(path string) int64 {
+	info, err := os.Stat(path)
+	if err != nil {
+		return 0
+	}
+
+	return info.Size()
 }
