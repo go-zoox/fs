@@ -2,7 +2,7 @@ package fs
 
 import (
 	"os"
-	"path"
+	ospath "path"
 	"strings"
 
 	"github.com/go-zoox/uuid"
@@ -10,27 +10,27 @@ import (
 
 // JoinPath joins paths into a path.
 func JoinPath(paths ...string) string {
-	return path.Join(paths...)
+	return ospath.Join(paths...)
 }
 
 // BaseName returns the last element of path.
-func BaseName(path_ string) string {
-	return path.Base(path_)
+func BaseName(path string) string {
+	return ospath.Base(path)
 }
 
 // DirName returns all but the last element of path.
-func DirName(path_ string) string {
-	return path.Dir(path_)
+func DirName(path string) string {
+	return ospath.Dir(path)
 }
 
 // ExtName returns the file extension of path.
-func ExtName(path_ string) string {
-	return path.Ext(path_)
+func ExtName(path string) string {
+	return ospath.Ext(path)
 }
 
 // IsAbsPath checks whether the path is absolute.
-func IsAbsPath(path_ string) bool {
-	return path.IsAbs(path_)
+func IsAbsPath(path string) bool {
+	return ospath.IsAbs(path)
 }
 
 // TmpDirPath returns the path of the temporary directory.

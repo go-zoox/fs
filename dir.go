@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // CreateDir creates a directory.
@@ -19,22 +20,12 @@ func RemoveDir(path string) error {
 
 // RenameDir renames a directory.
 func RenameDir(srcPath string, dstPath string) error {
-	return RenameFile(srcPath, dstPath)
+	return os.Rename(srcPath, dstPath)
 }
 
 // MoveDir moves a directory.
 func MoveDir(srcPath string, dstPath string) error {
-	return MoveFile(srcPath, dstPath)
-}
-
-// Mkdir creates a directory.
-func Mkdir(path string) error {
-	return CreateDir(path)
-}
-
-// Mkdirp creates a deep directory.
-func Mkdirp(path string) error {
-	return CreateDir(path)
+	return os.Rename(srcPath, dstPath)
 }
 
 // ListDir lists the files in a directory.
@@ -64,13 +55,14 @@ func CopyDir(srcPath string, dstPath string) error {
 		}
 
 		if dir.IsDir() {
-			if IsExist(path) {
+			dstPath := strings.Replace(path, srcPath, dstPath, 1)
+			if IsExist(dstPath) {
 				return nil
 			}
 
-			return CreateDir(path)
+			return CreateDir(dstPath)
 		}
 
-		return CopyFile(path, JoinPath(dstPath, dir.Name()))
+		return CopyFile(path, strings.Replace(path, srcPath, dstPath, 1))
 	})
 }

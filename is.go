@@ -7,7 +7,7 @@ import (
 // IsExist checks whether a file or directory exists.
 func IsExist(path string) bool {
 	_, err := os.Stat(path)
-	return err == nil || os.IsExist(err)
+	return err == nil
 }
 
 // IsFile checks whether the path is a file.
@@ -22,15 +22,15 @@ func IsDir(path string) bool {
 	return err == nil && fi.Mode().IsDir()
 }
 
-// IsLink checks whether the path is a symbolic link.
-func IsLink(path string) bool {
-	fi, err := os.Stat(path)
+// IsSymbolicLink checks whether the path is a symbolic link.
+func IsSymbolicLink(path string) bool {
+	fi, err := os.Lstat(path)
 	return err == nil && fi.Mode()&os.ModeSymlink != 0
 }
 
 // IsEmpty checks whether the dir/file is empty.
 func IsEmpty(path string) bool {
-	if !IsFile(path) {
+	if IsFile(path) {
 		if bytes, err := ReadFile(path); err != nil {
 			panic(err)
 		} else {

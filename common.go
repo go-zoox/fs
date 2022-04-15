@@ -50,3 +50,18 @@ func Rename(srcPath, dstPath string) error {
 func Walk(path string, fn iofs.WalkDirFunc) error {
 	return WalkDir(path, fn)
 }
+
+// CreateSymbolicLink creates a symbolic link
+func CreateSymbolicLink(srcPath, dstPath string) error {
+	return os.Symlink(srcPath, dstPath)
+}
+
+// Mkdir creates a directory.
+func Mkdir(path string) error {
+	return CreateDir(path)
+}
+
+// Mkdirp creates a deep directory.
+func Mkdirp(path string) error {
+	return CreateDir(path)
+}

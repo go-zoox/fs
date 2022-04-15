@@ -25,13 +25,18 @@ func RemoveFile(path string) error {
 
 // CopyFile copies a file.
 func CopyFile(srcPath string, dstPath string) error {
+	srcStat, err := os.Stat(srcPath)
+	if err != nil {
+		return err
+	}
+
 	srcFile, err := os.Open(srcPath)
 	if err != nil {
 		return err
 	}
 	defer srcFile.Close()
 
-	dstFile, err := os.Open(dstPath)
+	dstFile, err := os.OpenFile(dstPath, os.O_WRONLY|os.O_CREATE, srcStat.Mode())
 	if err != nil {
 		return err
 	}
@@ -62,7 +67,7 @@ func OpenFile(path string) (*os.File, error) {
 
 // WriteFile writes a file.
 func WriteFile(path string, data []byte) error {
-	f, err := os.Open(path)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return err
 	}
@@ -87,8 +92,8 @@ func ReadFileAsString(srcPath string) (string, error) {
 	return string(bytes), nil
 }
 
-// ReadFileByLine reads a file by line.
-func ReadFileByLine(srcPath string) ([]string, error) {
+// ReadFileLines reads a file by line.
+func ReadFileLines(srcPath string) ([]string, error) {
 	f, err := os.Open(srcPath)
 	if err != nil {
 		return nil, err
