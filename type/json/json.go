@@ -8,6 +8,7 @@ import (
 	"github.com/go-zoox/fs"
 )
 
+// Read reads the file at the given path and parses it as JSON into data.
 func Read(path string, data interface{}) error {
 	if path == "" {
 		return fmt.Errorf("path is empty")
@@ -24,6 +25,7 @@ func Read(path string, data interface{}) error {
 	return osjson.Decode([]byte(str), data)
 }
 
+// Write writes the given data to the file at the given path.
 func Write(path string, data interface{}) error {
 	if path == "" {
 		return fmt.Errorf("path is empty")

@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// CreateFile creates a file.
 func CreateFile(path string) error {
 	file, err := os.Create(path)
 	if err != nil {
@@ -17,10 +18,12 @@ func CreateFile(path string) error {
 	return nil
 }
 
+// RemoveFile removes a file.
 func RemoveFile(path string) error {
 	return os.Remove(path)
 }
 
+// CopyFile copies a file.
 func CopyFile(srcPath string, dstPath string) error {
 	srcFile, err := os.Open(srcPath)
 	if err != nil {
@@ -42,18 +45,22 @@ func CopyFile(srcPath string, dstPath string) error {
 	return nil
 }
 
+// RenameFile renames a file.
 func RenameFile(srcPath, dstPath string) error {
 	return os.Rename(srcPath, dstPath)
 }
 
+// MoveFile moves a file.
 func MoveFile(srcPath, dstPath string) error {
 	return RenameFile(srcPath, dstPath)
 }
 
+// OpenFile opens a file.
 func OpenFile(path string) (*os.File, error) {
 	return os.Open(path)
 }
 
+// WriteFile writes a file.
 func WriteFile(path string, data []byte) error {
 	f, err := os.Open(path)
 	if err != nil {
@@ -65,10 +72,12 @@ func WriteFile(path string, data []byte) error {
 	return nil
 }
 
+// ReadFile reads a file.
 func ReadFile(srcPath string) ([]byte, error) {
 	return ioutil.ReadFile(srcPath)
 }
 
+// ReadFileAsString reads a file as string.
 func ReadFileAsString(srcPath string) (string, error) {
 	bytes, err := ReadFile(srcPath)
 	if err != nil {
@@ -78,6 +87,7 @@ func ReadFileAsString(srcPath string) (string, error) {
 	return string(bytes), nil
 }
 
+// ReadFileByLine reads a file by line.
 func ReadFileByLine(srcPath string) ([]string, error) {
 	f, err := os.Open(srcPath)
 	if err != nil {
@@ -101,4 +111,9 @@ func ReadFileByLine(srcPath string) ([]string, error) {
 	}
 
 	return res, nil
+}
+
+// Stat returns the FileInfo structure describing file.
+func Stat(path string) (os.FileInfo, error) {
+	return os.Stat(path)
 }
