@@ -23,7 +23,7 @@ f := fs.OpenFile("/path/to/file")
 
 ```go
 // go doc
-func BaseName(path_ string) string
+func BaseName(path string) string
 func Chmod(name string, mode os.FileMode) error
 func Chown(name string, uid, gid int) error
 func Copy(srcPath, dstPath string) error
@@ -31,14 +31,15 @@ func CopyDir(srcPath string, dstPath string) error
 func CopyFile(srcPath string, dstPath string) error
 func CreateDir(path string) error
 func CreateFile(path string) error
-func DirName(path_ string) string
-func ExtName(path_ string) string
-func IsAbsPath(path_ string) bool
+func CreateSymbolicLink(srcPath, dstPath string) error
+func DirName(path string) string
+func ExtName(path string) string
+func IsAbsPath(path string) bool
 func IsDir(path string) bool
 func IsEmpty(path string) bool
 func IsExist(path string) bool
 func IsFile(path string) bool
-func IsLink(path string) bool
+func IsSymbolicLink(path string) bool
 func JoinPath(paths ...string) string
 func ListDir(path string) ([]iofs.FileInfo, error)
 func Mkdir(path string) error
@@ -50,7 +51,7 @@ func Open(path string) (*os.File, error)
 func OpenFile(path string) (*os.File, error)
 func ReadFile(srcPath string) ([]byte, error)
 func ReadFileAsString(srcPath string) (string, error)
-func ReadFileByLine(srcPath string) ([]string, error)
+func ReadFileLines(srcPath string) ([]string, error)
 func Remove(path string) error
 func RemoveDir(path string) error
 func RemoveFile(path string) error
