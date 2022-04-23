@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/go-zoox/encoding v1.0.1
+	github.com/go-zoox/errors v1.0.2
 	github.com/go-zoox/uuid v0.0.1
 	github.com/subpop/go-ini v0.1.4
 )
