@@ -3,16 +3,16 @@ module github.com/go-zoox/fs
 go 1.17
 
 require (
-	github.com/go-zoox/encoding v1.0.4
+	github.com/go-zoox/encoding v1.0.5
 	github.com/go-zoox/errors v1.0.2
 	github.com/go-zoox/uuid v0.0.1
 )
 
 require (
 	github.com/fatih/color v1.13.0 // indirect
-	github.com/go-zoox/core-utils v1.0.1 // indirect
-	github.com/go-zoox/ini v1.0.2 // indirect
-	github.com/go-zoox/tag v1.0.3 // indirect
+	github.com/go-zoox/core-utils v1.0.4 // indirect
+	github.com/go-zoox/ini v1.0.4 // indirect
+	github.com/go-zoox/tag v1.0.6 // indirect
 	github.com/goccy/go-yaml v1.9.5 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
