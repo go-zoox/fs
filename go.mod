@@ -1,6 +1,6 @@
 module github.com/go-zoox/fs
 
-go 1.17
+go 1.18
 
 require (
 	github.com/go-zoox/encoding v1.0.5
