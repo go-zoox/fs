@@ -1,11 +1,17 @@
 package fs
 
 import (
+	"context"
+	"fmt"
 	iofs "io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
+	"time"
+
+	"github.com/fsnotify/fsnotify"
 )
 
 // CreateDir creates a directory.
@@ -65,4 +71,83 @@ func CopyDir(srcPath string, dstPath string) error {
 
 		return CopyFile(path, strings.Replace(path, srcPath, dstPath, 1))
 	})
+}
+
+// WatchDir watches the changes of files.
+func WatchDir(ctx context.Context, paths []string, callback func(err error, event string, filepath string)) error {
+	// @TODO cannot use go-zoox/debounce.New
+	//	because go generic is bad
+	debounce := func(fn func(err error, event string, filepath string), interval time.Duration) func(err error, event string, filepath string) error {
+		var mu sync.Mutex
+		var timer *time.Timer
+
+		return func(err error, event string, filepath string) error {
+			mu.Lock()
+			defer mu.Unlock()
+
+			if timer != nil {
+				timer.Stop()
+			}
+
+			timer = time.AfterFunc(interval, func() {
+				fn(err, event, filepath)
+			})
+
+			return nil
+		}
+	}
+
+	debouncedCallback := debounce(callback, 300*time.Millisecond)
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		return fmt.Errorf("failed to create watcher: %s", err)
+	}
+
+	for _, path := range paths {
+		err := WalkDir(path, func(path string, d iofs.DirEntry, err error) error {
+			if d.IsDir() {
+				if err := watcher.Add(path); err != nil {
+					return fmt.Errorf("failed to watch directory: %s (err: %s)", path, err)
+				}
+			}
+
+			return nil
+		})
+		if err != nil {
+			return fmt.Errorf("failed to walk dir: %v", err)
+		}
+	}
+
+	for {
+		select {
+		case e := <-watcher.Events:
+			if e.Op == fsnotify.Chmod {
+				continue
+			}
+
+			op := ""
+			switch e.Op {
+			case fsnotify.Write:
+				op = "WRITE"
+			case fsnotify.Create:
+				op = "CREATE"
+			case fsnotify.Remove:
+				op = "REMOVE"
+			case fsnotify.Rename:
+				op = "RENAME"
+			default:
+				op = fmt.Sprintf("UNKNOWN(%d)", e.Op)
+			}
+
+			debouncedCallback(nil, op, e.Name)
+		case err := <-watcher.Errors:
+			debouncedCallback(err, "ERROR", "")
+
+		case <-ctx.Done():
+			if err := watcher.Close(); err != nil {
+				return fmt.Errorf("failed to close watcher: %s", err)
+			}
+			return nil
+		}
+	}
 }
