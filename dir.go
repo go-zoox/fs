@@ -15,8 +15,12 @@ import (
 )
 
 // CreateDir creates a directory.
-func CreateDir(path string) error {
-	return os.MkdirAll(path, 0755)
+func CreateDir(path string, perm ...iofs.FileMode) error {
+	var permX iofs.FileMode = 0755
+	if len(perm) != 0 && perm[0] != 0 {
+		permX = perm[0]
+	}
+	return os.MkdirAll(path, permX)
 }
 
 // RemoveDir removes a directory.
@@ -66,7 +70,13 @@ func CopyDir(srcPath string, dstPath string) error {
 				return nil
 			}
 
-			return CreateDir(dstPath)
+			stat, err := os.Stat(path)
+			if err != nil {
+				return fmt.Errorf("failed to get origin permission of dir (%s): %s", path, err)
+			}
+
+			// return CreateDir(dstPath, stat.Mode().Perm())
+			return CreateDir(dstPath, stat.Mode())
 		}
 
 		return CopyFile(path, strings.Replace(path, srcPath, dstPath, 1))

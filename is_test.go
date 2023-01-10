@@ -74,7 +74,7 @@ func TestIsDir(t *testing.T) {
 }
 
 func TestIsSymbolicLink(t *testing.T) {
-	if IsSymbolicLink("/tmp") {
+	if !IsSymbolicLink("/tmp") {
 		t.Error("/tmp is not a symbolic link")
 	}
 

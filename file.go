@@ -2,9 +2,12 @@ package fs
 
 import (
 	"bufio"
+	"fmt"
 	"io"
+	"io/fs"
 	"io/ioutil"
 	"os"
+	"reflect"
 	"sort"
 )
 
@@ -62,8 +65,30 @@ func MoveFile(srcPath, dstPath string) error {
 }
 
 // OpenFile opens a file.
-func OpenFile(path string) (*os.File, error) {
-	return os.Open(path)
+func OpenFile(path string, flagAndPerm ...interface{}) (*os.File, error) {
+	//  according os.Open method
+	var flag int = os.O_RDONLY
+	var perm fs.FileMode = 0
+
+	if len(flagAndPerm) > 0 {
+		if flagAndPerm[0] != 0 {
+			flagX, ok := flagAndPerm[0].(int)
+			if !ok {
+				return nil, fmt.Errorf("flag must be int, but got: %s(value: %v)", reflect.TypeOf(flagAndPerm[0]), flagAndPerm[0])
+			}
+			flag = flagX
+		}
+
+		if len(flagAndPerm) > 1 && flagAndPerm[1] != 0 {
+			permX, ok := flagAndPerm[1].(fs.FileMode)
+			if !ok {
+				return nil, fmt.Errorf("flag must be uint32, but got: %s(value: %v)", reflect.TypeOf(flagAndPerm[1]), flagAndPerm[0])
+			}
+			perm = permX
+		}
+	}
+
+	return os.OpenFile(path, flag, perm)
 }
 
 // WriteFile writes a file.

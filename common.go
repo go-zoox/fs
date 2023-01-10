@@ -57,11 +57,11 @@ func CreateSymbolicLink(srcPath, dstPath string) error {
 }
 
 // Mkdir creates a directory.
-func Mkdir(path string) error {
-	return CreateDir(path)
+func Mkdir(path string, perm ...iofs.FileMode) error {
+	return CreateDir(path, perm...)
 }
 
 // Mkdirp creates a deep directory.
-func Mkdirp(path string) error {
-	return CreateDir(path)
+func Mkdirp(path string, perm ...iofs.FileMode) error {
+	return CreateDir(path, perm...)
 }
