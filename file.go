@@ -92,16 +92,22 @@ func OpenFile(path string, flagAndPerm ...interface{}) (*os.File, error) {
 }
 
 // WriteFile writes a file.
-func WriteFile(path string, data []byte) error {
+func WriteFile(path string, data []byte) (err error) {
+	var f *os.File
 	if !IsExist(path) {
 		if err := CreateFile(path); err != nil {
 			return err
 		}
-	}
+	} else {
+		f, err = os.OpenFile(path, os.O_WRONLY, 0644)
+		if err != nil {
+			return err
+		}
 
-	f, err := os.OpenFile(path, os.O_WRONLY, 0644)
-	if err != nil {
-		return err
+		// clean origin text
+		if err := f.Truncate(0); err != nil {
+			return err
+		}
 	}
 	defer f.Close()
 
