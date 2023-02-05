@@ -124,6 +124,7 @@ func AppendFile(path string, data []byte) error {
 	if err != nil {
 		return err
 	}
+	defer f.Close()
 
 	if _, err := f.Write(data); err != nil {
 		return err
