@@ -118,6 +118,20 @@ func WriteFile(path string, data []byte) (err error) {
 	return nil
 }
 
+// AppendFile appends a file.
+func AppendFile(path string, data []byte) error {
+	f, err := os.OpenFile(path, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return err
+	}
+
+	if _, err := f.Write(data); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // ReadFile reads a file.
 func ReadFile(srcPath string) ([]byte, error) {
 	return ioutil.ReadFile(srcPath)
