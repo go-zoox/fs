@@ -13,8 +13,8 @@ github.com/go-playground/validator/v10 v10.4.1 h1:pH2c5ADXtd66mxoE0Zm9SUhxE20r7a
 github.com/go-playground/validator/v10 v10.4.1/go.mod h1:nlOn6nFhuKACm19sB/8EGNn9GlaMV7XkbRSipzJ0Ii4=
 github.com/go-zoox/core-utils v1.2.2 h1:6xcJ3Fe/yO2wXyWNaFkD5rBRzD7GUqRPQ8yXzFFa6AU=
 github.com/go-zoox/core-utils v1.2.2/go.mod h1:Y6izFcxuELrkOen5mTQccCJxJqqPJaZV5dQtUMBdkBM=
-github.com/go-zoox/encoding v1.2.0 h1:9WRrC+iH9zIPX72oatZCk948jMa/27ayKw8jz6/KJco=
-github.com/go-zoox/encoding v1.2.0/go.mod h1:NdcM7Ln73oVW3vJgx3MH4fJknCcdQfq+NgJ0tuCo7tU=
+github.com/go-zoox/encoding v1.2.1 h1:38rQRsfL1f1YHZaqsPaGcNMkPnzatnPlYiHioUh9F4A=
+github.com/go-zoox/encoding v1.2.1/go.mod h1:NdcM7Ln73oVW3vJgx3MH4fJknCcdQfq+NgJ0tuCo7tU=
 github.com/go-zoox/errors v1.0.2 h1:1NLMoEVlDU1+qrvvPj+rrJXOvQPdeZ3DekVBFrI5PFY=
 github.com/go-zoox/errors v1.0.2/go.mod h1:HJ5NKQb9cu3IbI0Jayw7xZiblLBEIglpaIOMxvQnWnk=
 github.com/go-zoox/ini v1.0.4 h1:N4mUbAO0juYIRrv3ysjKtpEn/+yQv57eQietsgpkAYQ=

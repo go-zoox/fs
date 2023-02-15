@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/fsnotify/fsnotify v1.5.4
-	github.com/go-zoox/encoding v1.2.0
+	github.com/go-zoox/encoding v1.2.1
 	github.com/go-zoox/errors v1.0.2
 	github.com/go-zoox/uuid v0.0.1
 )
