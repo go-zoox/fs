@@ -5,9 +5,10 @@ import (
 	"os"
 )
 
-// Open opens a file.
+// Open opens a file, if file not found, creates it.
 func Open(path string) (*os.File, error) {
-	return OpenFile(path)
+	// return OpenFile(path)
+	return os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
 }
 
 // Copy copies a file or directory
