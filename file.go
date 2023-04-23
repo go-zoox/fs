@@ -12,14 +12,8 @@ import (
 )
 
 // CreateFile creates a file.
-func CreateFile(path string) error {
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-
-	defer file.Close()
-	return nil
+func CreateFile(path string) (*os.File, error) {
+	return os.Create(path)
 }
 
 // RemoveFile removes a file.
@@ -95,9 +89,12 @@ func OpenFile(path string, flagAndPerm ...interface{}) (*os.File, error) {
 func WriteFile(path string, data []byte) (err error) {
 	var f *os.File
 	if !IsExist(path) {
-		if err := CreateFile(path); err != nil {
+		fx, err := CreateFile(path)
+		if err != nil {
 			return err
 		}
+
+		f = fx
 	} else {
 		f, err = os.OpenFile(path, os.O_WRONLY, 0644)
 		if err != nil {
