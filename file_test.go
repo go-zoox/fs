@@ -10,7 +10,7 @@ func TestCreateFile(t *testing.T) {
 		t.Errorf("Expected path [%s] not exist", path)
 	}
 
-	if err := CreateFile(path); err != nil {
+	if _, err := CreateFile(path); err != nil {
 		t.Error(err)
 	}
 
