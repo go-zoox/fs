@@ -1,4 +1,4 @@
 package fs
 
 // Version is the current version of the package.
-var Version = "1.3.12"
+var Version = "1.3.13"
