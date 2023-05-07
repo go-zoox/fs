@@ -3,6 +3,7 @@ package fs
 import (
 	"fmt"
 	"os"
+	"os/user"
 	ospath "path"
 	"strings"
 
@@ -64,9 +65,26 @@ func HomeDir() string {
 	return homeDir
 }
 
-// ConfigDir returns the user config directory, which is $HOME/.config
+// ConfigDir returns the config dir by user
+//
+//	if user is root, return system config dir
+//	if user is common user, return user home config dir
 func ConfigDir() string {
+	if user, err := user.Current(); err == nil && user.Uid == "0" {
+		return SystemConfigDir()
+	}
+
+	return UserConfigDir()
+}
+
+// UserConfigDir returns the user config directory, which is $HOME/.config
+func UserConfigDir() string {
 	return JoinPath(HomeDir(), ".config")
+}
+
+// SystemConfigDir returns the system config directory, which is /etc
+func SystemConfigDir() string {
+	return "/etc"
 }
 
 // JoinCurrentDir returns the path which relative with current dir.
@@ -79,7 +97,7 @@ func JoinHomeDir(relativePath string) string {
 	return JoinPath(HomeDir(), relativePath)
 }
 
-// JoinConfigDir returns the path which relative with user home config dir.
+// JoinConfigDir returns the path which relative with config dir.
 func JoinConfigDir(relativePath string) string {
 	return JoinPath(ConfigDir(), relativePath)
 }
