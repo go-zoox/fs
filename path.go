@@ -97,7 +97,16 @@ func JoinHomeDir(relativePath string) string {
 	return JoinPath(HomeDir(), relativePath)
 }
 
-// JoinConfigDir returns the path which relative with config dir.
-func JoinConfigDir(relativePath string) string {
-	return JoinPath(ConfigDir(), relativePath)
+// JoinConfigDir returns the config of appName + configName.
+// configName default is config.yml.
+func JoinConfigDir(appName string, configName ...string) string {
+	if len(configName) == 0 {
+		configName = append(configName, "config.yml")
+	}
+
+	if configName[0] == "" {
+		panic("config name cannot be empty")
+	}
+
+	return JoinPath(ConfigDir(), appName, configName[0])
 }
