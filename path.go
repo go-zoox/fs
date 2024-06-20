@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/user"
 	ospath "path"
-	"strings"
 
 	"github.com/go-zoox/uuid"
 )
@@ -42,7 +41,8 @@ func TmpDirPath() string {
 
 // TmpFilePath returns the path of the temporary file.
 func TmpFilePath() string {
-	return strings.Join([]string{TmpDirPath(), uuid.V4()}, "/")
+	return JoinPath(TmpDirPath(), uuid.V4())
+	// return strings.Join([]string{TmpDirPath(), uuid.V4()}, "/")
 }
 
 // CurrentDir returns the path of the current directory.
